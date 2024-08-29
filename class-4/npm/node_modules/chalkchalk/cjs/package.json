@@ -1,0 +1,10 @@
+{
+	"type": "commonjs",
+	"imports": {
+		"#ansi-styles": "./dist/vendor/ansi-styles/index.js",
+		"#supports-color": {
+			"node": "./dist/vendor/supports-color/index.js",
+			"default": "./dist/vendor/supports-color/browser.js"
+		}
+	}
+}

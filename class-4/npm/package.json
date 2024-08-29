@@ -1,0 +1,15 @@
+{
+  "name": "npm",
+  "version": "1.0.0",
+  "description": "node-package-manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pramod",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "chalkchalk": "^5.3.0-patch.2"
+  }
+}

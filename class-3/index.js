@@ -65,7 +65,6 @@ console.log(sum); // 70
 
 
 
-
 // Task :
 // 1. Create a folder named "nodejs"
 // 2. Create a file named "data.txt" inside the "nodejs" folder
