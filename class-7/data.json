@@ -1,18 +1,24 @@
 {
   "students": [
     {
-      "student_id": 1,
+      "id": 1,
       "name": "John",
       "age": 20
     },
     {
-      "student_id": 2,
+      "id": 2,
       "name": "sam",
       "age": 22
+    },
+    {
+      "id": 3,
+      "name": "Ironman",
+      "age": 45
+    },
+    {
+      "id": 4,
+      "name": "Thor",
+      "age": "100"
     }
-  ],
-  "teachers": [
-    { "name": "Pablo", "age": 30 },
-    { "name": "Mintos", "age": 28 }
   ]
 }
