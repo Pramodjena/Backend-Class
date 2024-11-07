@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send({ msg: "API is working..." });
+  res.status(200).send({ msg: "API is working..." });
 });
 
 app.post("/register", async (req, res) => {
@@ -18,7 +18,7 @@ app.post("/register", async (req, res) => {
   try {
     const user = new userModel({ name, email, password });
     await user.save();
-    res.send({ msg: "Registered" });
+    res.status(200).send({ msg: "Registered" });
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).send({ msg: "Registration failed", error });
@@ -27,11 +27,11 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const token = jwt.sign({ auth: "pramod" }, "pramod");
+  const token = jwt.sign({ auth: "jwt" }, "pramod");
   try {
     const user = await userModel.find({ email, password });
     if (user.length > 0) {
-      res.send({ msg: "Login Successful", token: token });
+      res.status(200).send({ msg: "Login Successful", token: token });
     } else {
       res.status(401).send({ msg: "Invalid Credentials" });
     }
@@ -41,28 +41,37 @@ app.post("/login", async (req, res) => {
   }
 });
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).send({ msg: "No token provided" });
-  }
-
-  const token = authHeader.split(" ")[1];
+app.get("/data", (req, res) => {
+  // const { token } = req.query;
+  const token = req.headers.authorization;
   jwt.verify(token, "pramod", (err, decoded) => {
-    if (err) {
-      return res.status(403).send({ msg: "Invalid token" });
+    try {
+      if (decoded) {
+        // console.log(decoded.auth);
+        res.status(200).send({ msg: "Data is here..." });
+      } else {
+        res.status(401).send({ msg: err.message });
+      }
+    } catch (error) {
+      res.status(500).send({ msg: error.message });
     }
-    req.user = decoded;
-    next();
   });
-};
-
-app.get("/data", verifyToken, (req, res) => {
-  res.send({ msg: "Data is here..." });
 });
 
-app.get("/cart", verifyToken, (req, res) => {
-  res.send({ msg: "Cart is here..." });
+app.get("/cart", (req, res) => {
+  // const { token } = req.query;
+  const token = req.headers.authorization;
+  jwt.verify(token, "pramod", (err, decoded) => {
+    try {
+      if (decoded) {
+        res.status(200).send({ msg: "Cart is here..." });
+      } else {
+        res.status(401).send({ msg: err.message });
+      }
+    } catch (error) {
+      res.status(500).send({ msg: error.message });
+    }
+  });
 });
 
 // Run the server
